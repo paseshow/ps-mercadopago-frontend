@@ -1,0 +1,102 @@
+<h4>Configuraciones</h4>
+
+
+<div class="accordion mt-3 mx-auto" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
+                Datos de la cuenta vinculada
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <div class="container mt-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label">ID CUENTA MERCADO PAGO</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">NOMBRE DE CUENTA</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label class="form-label">PUBLIC KEY</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col">
+                            <label class="form-label">ACCESS TOKEN</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid mt-3">
+                    <button class="btn btn-success" type="submit" [disabled]="true">INGRESAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h5 class="ml-3 mt-4">Eventos habilitados</h5>
+
+<div class="container mt-4 mb-4">
+    <div class="row  mx-auto">
+
+        <div class="col col-md-3">
+            <label class="form-label">Filtro por id</label>
+            <input type="email" class="form-control" (keyup)="filterById($event.target.value)">
+        </div>
+
+        <div class="col col-md-9">
+
+            <div class="container mt-5">
+                <div class="row  mx-auto">
+                    <div class="container containerListEventos">
+
+                        <div *ngIf="isLoading" class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+
+                        <table *ngIf="!isLoading" class="table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">EVENTO</th>
+                                    <!-- <th scope="col">ACTIVO</th> -->
+                                </tr>
+                            </thead>
+                            <tbody class="tbody">
+                                <tr *ngFor="let evento of listEventosHabilitados">
+                                    <td>{{ evento.id }}</td>
+                                    <td>{{ evento.nombre }}</td>
+                                    <!-- <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                        </div>
+                                    </td> -->
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

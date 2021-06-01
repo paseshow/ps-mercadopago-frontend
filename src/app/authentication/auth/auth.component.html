@@ -1,0 +1,22 @@
+<div class="container-fluid vh-100">
+    <div class="container containerLogin mx-auto">
+
+        <img class="imgLogo" src="../../../assets/images/logoPaseShow.png" alt="PaseShow" height="85" width="270">
+
+        <form [formGroup]="formLogin" (submit)="login()">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">DNI</label>
+                <input type="email" class="form-control" formControlName="username">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">CONTRASEÑA</label>
+                <input type="password" class="form-control" formControlName="password">
+            </div>
+
+            <div class="d-grid">
+                <button class="btn btn-success" type="submit" [disabled]="!formLogin.valid">INGRESAR</button>
+              </div>
+        </form>
+    </div>
+</div>

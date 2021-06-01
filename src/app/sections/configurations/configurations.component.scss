@@ -1,0 +1,26 @@
+.containerListEventos {
+    max-width: 700px;
+    max-height: 500px;
+    overflow-x: auto;
+}
+
+thead tr th { 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.accordion {
+    max-width: 1000px
+}
+
+.accordion-button {
+    color: white;
+    background-color: #2335d9 ;
+    box-shadow: 0px 0px 5px 1px black;
+}
+
+.accordion-collapse {
+    border-color: #2335d9;
+    box-shadow: 0px 0px 5px 1px black;
+}
