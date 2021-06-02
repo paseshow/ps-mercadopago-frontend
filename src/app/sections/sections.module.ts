@@ -7,11 +7,14 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
 import { ReportsComponent } from './reports/reports.component';
 import { SectionsComponents } from './sections.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forChild(SectionsRoutes)
+        RouterModule.forChild(SectionsRoutes),
+        ReactiveFormsModule,
+        FormsModule
     ],
     exports: [],
     declarations: [
