@@ -1,1 +1,92 @@
-<p>reports works!</p>
+<div class="containerPadre">
+    <h4>Registros:</h4>
+    <p class="text-muted">
+        Acciones realizadas por mercado pago. Limite de registro 5.
+    </p>
+
+    <div class="container mt-4 mb-4">
+        <div class="container">
+            <div class="row  mx-auto">
+                <div class="container containerListRegistros">
+
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">ID TRANSACCION</th>
+                                <th scope="col">RESERVA ID</th>
+                                <th scope="col">CUENTA MERCADO PAGO</th>
+                                <th scope="col">ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr *ngFor="let unRegistroOnline of listReservasOnline">
+                                <td>{{ unRegistroOnline.idTransaccionMp }}</td>
+                                <td>{{ unRegistroOnline.reservaId }}</td>
+                                <td>{{ unRegistroOnline.collectorId }}</td>
+                                <td>{{ unRegistroOnline.statusReference }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="ml-3 mt-4">Buscar por reserva id:</h5>
+    <div class="container">
+        <form [formGroup]="formSearch">
+            <div class="input-group">
+                <input type="text" aria-label="First name" class="form-control" placeholder="Reserva id" formControlName="id">
+                <input type="text" aria-label="Last name" class="form-control" placeholder="Dni cliente" formControlName="clienteDni">
+                <button class="btn btn-success" type="button" (click)="searchReserva()">
+                    <i class="bx bx-search-alt-2"></i>
+                    Búscar
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="container mt-4 mb-4 p-0">
+        <div class="container p-0">
+            <div class="mx-auto">
+                <div class="container containerListRegistros p-0">
+
+                    <table class="table  text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <!-- <th scope="col textTile">ID TRANSACCION</th> -->
+                                <th scope="col">RESERVA ID</th>
+                                <th scope="col">FECHA RESERVA</th>
+                                <th scope="col">CLIENTE</th>
+                                <th scope="col">DNI CLIENTE</th>
+                                <th scope="col">EMAIL CLIENTE</th>
+                                <th scope="col">UBICACIÓN ID</th>
+                                <th scope="col">DESCUENTO UBICACIÓN</th>
+                                <th scope="col">SECTOR EVENTO</th>
+                                <th scope="col">FECHA FUNCION</th>
+                                <th scope="col">MONTO TOTAL</th>
+                                <th scope="col">ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr *ngFor="let anReserva of listReservas">
+                                <td>{{ anReserva.id }}</td>
+                                <td>{{ anReserva.fechaReserva | date: 'short' }}</td>
+                                <td>{{ anReserva.clienteNombre }}</td>
+                                <td>{{ anReserva.clienteDni }}</td>
+                                <td>{{ anReserva.clienteEmail }}</td>
+                                <td>{{ anReserva.ubicacionEventoId }}</td>
+                                <td>{{ anReserva.descuentoSectorDescripcion }}</td>
+                                <td>{{ anReserva.sectorEventoDescripcion }}</td>
+                                <td>{{ anReserva.sectorEventoFechaFuncion | date: 'short'}}</td>
+                                <td>{{ anReserva.importeTotal }}</td>
+                                <td>{{ anReserva.estado }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

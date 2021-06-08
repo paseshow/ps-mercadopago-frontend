@@ -1,6 +1,13 @@
+.containerNotData {
+    background-color: rgb(230, 42, 42);
+    color: white;
+    font-weight: bolder;
+    border-radius: 15px;
+}
+
 .containerListEventos {
     max-width: 600px;
-    max-height: 500px;
+    max-height: 400px;
     overflow-x: auto;
 }
 
@@ -27,4 +34,8 @@ thead tr th {
 
 label {
     font-size: 13px;
+}
+
+.eventSelect {
+    background-color: rgb(76, 221, 76);
 }
