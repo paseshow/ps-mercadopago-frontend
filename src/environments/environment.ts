@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   urlPaseShow: 'https://www.paseshow.com.ar/test/',
-  url: 'http://localhost:8083/'
+  url: 'http://api.test.mercadopago.paseshow.com.ar/'
 };
 
 /*

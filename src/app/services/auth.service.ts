@@ -13,14 +13,12 @@ export class AuthService {
 
     login(formLogin: FormGroup) {
 
-        const FormData = new HttpParams()
-            .append('username', formLogin.get('username').value)
-            .append('password', formLogin.get('password').value)
-
-        const headers = new HttpHeaders()
-            .append('Content-Type', 'application/x-www-form-urlencoded');
-
-        return this.http.post(environment.urlPaseShow + 'usuarios/authenticate', FormData.toString(), { headers: headers }).pipe(take(1));
+        let JsonLogin = {
+            "username": formLogin.get("username").value,
+            "password": formLogin.get("password").value,
+        }
+        // return this.http.post(environment.urlPaseShow + 'usuarios/authenticate', FormData.toString(), { headers: headers }).pipe(take(1));
+        return this.http.post(environment.url + 'authentication', JsonLogin).pipe(take(1));
     };
 
 }

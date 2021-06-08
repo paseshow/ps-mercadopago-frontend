@@ -8,6 +8,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { SectionsComponents } from './sections.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RefundsComponent } from './refunds/refunds.component';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     declarations: [
         SectionsComponents,
         ConfigurationsComponent,
-        ReportsComponent
+        ReportsComponent,
+        RefundsComponent
     ],
     providers: [],
 })

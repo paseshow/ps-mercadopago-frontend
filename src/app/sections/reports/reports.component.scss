@@ -1,0 +1,11 @@
+.containerListRegistros {
+    max-width: 100%;
+    max-height: 460px;
+    overflow-x: auto;
+}
+
+thead tr th { 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}

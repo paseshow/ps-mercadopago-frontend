@@ -13,8 +13,8 @@ export class MercadoPagoService {
         private http: HttpClient
     ) { }
 
-    getDataCuentaVinculada(): Observable<DataMercadoPago> {
-        return this.http.get<DataMercadoPago>(environment.url + 'security').pipe(take(1));
+    getDataCuentaVinculada(eventId): Observable<DataMercadoPago> {
+        return this.http.get<DataMercadoPago>(environment.url + 'security/' + eventId).pipe(take(1));
     };
 
     updateDataCuentaVinculada(dataUpdate: FormGroup) {

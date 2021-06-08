@@ -4,5 +4,6 @@ export interface DataMercadoPago {
     publicKey: string,
     userIdMp: number,
     nombreCuenta: string,
-    nombre: string
+    nombre: string,
+    eventoId: number,
 };

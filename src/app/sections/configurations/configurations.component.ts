@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Eventoes } from 'src/app/models/eventoes.model';
 import { EventoesService } from 'src/app/services/eventoes.services';
@@ -11,12 +11,16 @@ import { MercadoPagoService } from 'src/app/services/mercadoPago.service';
 })
 export class ConfigurationsComponent implements OnInit {
 
+  @ViewChild('itemEvent', { static: false }) itemEvent: ElementRef;
+
   formDataMercadoPago: FormGroup;
 
   listEventosHabilitados: Eventoes[];
   listEventosHabilitadosOriginal: Eventoes[];
 
   isLoading: boolean;
+  isEventoSelect: boolean;
+  notDataConfigurations: boolean;
 
   constructor(
     private eventoesService: EventoesService,
@@ -26,17 +30,30 @@ export class ConfigurationsComponent implements OnInit {
     this.listEventosHabilitados = [];
     this.listEventosHabilitadosOriginal = [];
     this.isLoading = true;
+    this.isEventoSelect = false;
+    this.notDataConfigurations = false;
   }
 
   ngOnInit(): void {
     this.initFormDataCuentaMercadoPago();
-    this.getDataCuentaMercadoPago();
     this.getEventos();
   }
 
-  getDataCuentaMercadoPago(): void {
+  initFormDataCuentaMercadoPago(): void {
+    this.formDataMercadoPago = this.fb.group({
+      id: [''],
+      accessToken: ['', Validators.required],
+      publicKey: ['', Validators.required],
+      userIdMp: [, Validators.required],
+      nombreCuenta: ['', Validators.required],
+      nombre: ['paseshow',],
+      eventoId: ['', Validators.required]
+    })
+  };
 
-    this.mercadoPagoService.getDataCuentaVinculada().subscribe(
+  getDataCuentaMercadoPago(eventoId): void {
+
+    this.mercadoPagoService.getDataCuentaVinculada(eventoId).subscribe(
       dataMercadoPago => {
         // SETEAMOS VALORES EN EL FORM
         this.formDataMercadoPago.get('id').setValue(dataMercadoPago.id);
@@ -44,8 +61,10 @@ export class ConfigurationsComponent implements OnInit {
         this.formDataMercadoPago.get('publicKey').setValue(dataMercadoPago.publicKey);
         this.formDataMercadoPago.get('userIdMp').setValue(dataMercadoPago.userIdMp);
         this.formDataMercadoPago.get('nombreCuenta').setValue(dataMercadoPago.nombreCuenta);
-      }, error => {
+        this.formDataMercadoPago.get('eventoId').setValue(dataMercadoPago.eventoId);
 
+      }, error => {
+        this.notDataConfigurations = true;
       });
 
   };
@@ -70,17 +89,6 @@ export class ConfigurationsComponent implements OnInit {
       });
   };
 
-  initFormDataCuentaMercadoPago(): void {
-    this.formDataMercadoPago = this.fb.group({
-      id: ['', Validators.required],
-      accessToken: ['', Validators.required],
-      publicKey: ['', Validators.required],
-      userIdMp: [0, Validators.required],
-      nombreCuenta: ['', Validators.required],
-      nombre: ['paseshow',]
-    })
-  };
-
   filterById(event): void {
     let auxArrayList: Eventoes[] = this.listEventosHabilitadosOriginal.slice();
     this.listEventosHabilitados = [];
@@ -94,13 +102,28 @@ export class ConfigurationsComponent implements OnInit {
   };
 
   saveDataMercadoPago(): void {
-
     this.mercadoPagoService.updateDataCuentaVinculada(this.formDataMercadoPago).subscribe(
       exist => {
-
       }, error => {
-
       });
+  };
+
+  openConfigurationsEventoId(eventoId, indexItemEvent): void {
+    this.formDataMercadoPago.reset();
+    this.isEventoSelect = true;
+    this.notDataConfigurations = false;
+
+    // le ponemos el color verde al item que se haya seleccionado, para indentificar el evento que mostrara datos 
+    const linkColor = document.querySelectorAll('.itemEvent');
+
+    if (linkColor) {
+      linkColor.forEach(l => l.classList.remove('eventSelect'));
+    }
+
+    linkColor[indexItemEvent].classList.add('eventSelect');
+
+    this.formDataMercadoPago.get('eventoId').setValue(eventoId);
+    this.getDataCuentaMercadoPago(eventoId);
   };
 
 }
