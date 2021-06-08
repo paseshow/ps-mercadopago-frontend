@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node server.js",
+    "start-test": "node server.js -c=test",
+    "build": "ng build --aot -c=$NODE_ENV",
+    "build-test": "ng build --aot -c=test",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
+    "e2e": "ng e2e",
+    "postinstall": "ngcc "
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.3",
