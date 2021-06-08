@@ -22,11 +22,18 @@ export class SectionsComponents implements OnInit {
             router: 'configuracion'
         },
         {
-            title: 'Búscar',
-            icon: 'bx-search',
+            title: 'Registros',
+            icon: 'bx-history',
             router: 'reports'
+        },
+        {
+            title: 'Devoluciones',
+            icon: 'bx-dollar-circle',
+            router: 'refunds'
         }
     ];
+
+
 
     constructor(
         private router: Router

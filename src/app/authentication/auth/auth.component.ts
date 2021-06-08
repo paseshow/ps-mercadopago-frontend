@@ -19,24 +19,18 @@ export class AuthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.formLogin = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
   }
 
   login(): void {
     this.authService.login(this.formLogin).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token);
-
         this.router.navigate(['home']);
       }, error => {
-
-
-
       });
   };
 
