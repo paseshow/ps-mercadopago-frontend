@@ -102,8 +102,10 @@ export class ConfigurationsComponent implements OnInit {
   };
 
   saveDataMercadoPago(): void {
-    this.mercadoPagoService.updateDataCuentaVinculada(this.formDataMercadoPago).subscribe(
+    this.mercadoPagoService.createDataCuentaVinculada(this.formDataMercadoPago).subscribe(
       exist => {
+        this.notDataConfigurations = false;
+        this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
       }, error => {
       });
   };
@@ -123,6 +125,8 @@ export class ConfigurationsComponent implements OnInit {
     linkColor[indexItemEvent].classList.add('eventSelect');
 
     this.formDataMercadoPago.get('eventoId').setValue(eventoId);
+    this.formDataMercadoPago.get('nombre').setValue('paseshow');
+
     this.getDataCuentaMercadoPago(eventoId);
   };
 
