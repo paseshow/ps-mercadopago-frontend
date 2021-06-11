@@ -82,10 +82,11 @@ export class ConfigurationsComponent implements OnInit {
             this.listEventosHabilitadosOriginal.push(unEvento);
           }
         })
+        this.isLoading = false;
       }, error => {
+        this.isLoading = false;
 
       }, () => {
-        this.isLoading = false;
       });
   };
 

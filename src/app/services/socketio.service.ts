@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SocketIoService extends Socket {
@@ -8,7 +9,7 @@ export class SocketIoService extends Socket {
 
     constructor() {
         super({
-            url: 'http://localhost:8084/',
+            url: environment.url,
             options: {
                 query: {
                     reservaId: 12345
