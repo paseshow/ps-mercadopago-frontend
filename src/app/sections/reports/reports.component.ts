@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReferenceMp } from 'src/app/models/referneceMp.model';
 import { Reserva } from 'src/app/models/reservas.model';
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss']
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent implements OnInit, AfterContentChecked {
 
   formSearch: FormGroup;
 
@@ -27,14 +27,51 @@ export class ReportsComponent implements OnInit {
   ) {
     this.listReservasOnline = [];
     this.socketIoService.outEven.subscribe((res: ReferenceMp) => {
+      let index = 4;
       console.log("Received of " + environment.url);
-      this.listReservasOnline.push(res);
+
+      for (let unRegistro in this.listReservasOnline) {
+        if (index == 0) break;
+        this.listReservasOnline[index] = this.listReservasOnline[index - 1];
+        index--;
+      }
+      this.listReservasOnline[0] = res;
     });
   }
 
   ngOnInit(): void {
     this.initFormSearch();
     this.getReference(5);
+  };
+
+  ngAfterContentChecked(): void {
+    const colorItemRegister = document.querySelectorAll('.listRegistros');
+    const colorItemRegisterFilter = document.querySelectorAll('.listRegistrosFilter');
+
+    if (colorItemRegister) {
+      colorItemRegister.forEach(unItem => {
+        if (unItem.innerHTML.includes("pending")) {
+          unItem.classList.remove('statusAproved');
+          unItem.classList.add('statusPendding');
+        } else {
+          unItem.classList.remove('statusPendding');
+          unItem.classList.add('statusAproved');
+        }
+      });
+    }
+
+    if (colorItemRegisterFilter) {
+      colorItemRegisterFilter.forEach(unItem => {
+        if (unItem.innerHTML.includes("pending")) {
+          unItem.classList.remove('statusAproved');
+          unItem.classList.add('statusPendding');
+        } else {
+          unItem.classList.remove('statusPendding');
+          unItem.classList.add('statusAproved');
+        }
+      });
+    }
+
   };
 
   initFormSearch(): void {
@@ -59,7 +96,7 @@ export class ReportsComponent implements OnInit {
 
         this.listReservas.forEach(anReserva => {
 
-          if (anReserva.estado == 'P') anReserva.estado = 'pendding';
+          if (anReserva.estado == 'P') anReserva.estado = 'pending';
           else if (anReserva.estado == 'E') anReserva.estado = 'approved';
 
         });

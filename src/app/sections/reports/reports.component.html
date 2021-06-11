@@ -9,7 +9,7 @@
             <div class="row  mx-auto">
                 <div class="container containerListRegistros">
 
-                    <table class="table">
+                    <table class="table text-center">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">ID TRANSACCION</th>
@@ -19,7 +19,7 @@
                             </tr>
                         </thead>
                         <tbody class="tbody">
-                            <tr *ngFor="let unRegistroOnline of listReservasOnline">
+                            <tr class="listRegistros"  *ngFor="let unRegistroOnline of listReservasOnline">
                                 <td>{{ unRegistroOnline.idTransaccionMp }}</td>
                                 <td>{{ unRegistroOnline.reservaId }}</td>
                                 <td>{{ unRegistroOnline.collectorId }}</td>
@@ -70,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody class="tbody">
-                            <tr *ngFor="let anReserva of listReservas">
+                            <tr class="listRegistrosFilter" *ngFor="let anReserva of listReservas">
                                 <td>{{ anReserva.id }}</td>
                                 <td>{{ anReserva.fechaReserva | date: 'short' }}</td>
                                 <td>{{ anReserva.clienteNombre }}</td>
