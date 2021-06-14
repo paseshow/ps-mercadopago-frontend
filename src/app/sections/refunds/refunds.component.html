@@ -98,7 +98,7 @@
                             </tr>
                         </thead>
                         <tbody class="tbody">
-                            <tr *ngFor="let anReserva of listReservas">
+                            <tr class="listRegistro" *ngFor="let anReserva of listReservas">
                                 <td>{{ anReserva.id }}</td>
                                 <td>{{ anReserva.fechaReserva | date: 'short' }}</td>
                                 <td>{{ anReserva.clienteNombre }}</td>
