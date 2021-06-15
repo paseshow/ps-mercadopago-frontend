@@ -29,6 +29,7 @@ export class AuthComponent implements OnInit {
     this.authService.login(this.formLogin).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('idUser', response.idUser);
         this.router.navigate(['home']);
       }, error => {
       });
