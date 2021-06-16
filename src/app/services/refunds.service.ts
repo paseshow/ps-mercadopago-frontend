@@ -22,4 +22,16 @@ export class RefundsService {
 
         return this.http.post(environment.url + `refunds`, { body: body }).pipe(take(1));
     };
+
+    refundsPartial(forms: FormGroup) {
+
+        const BODY = {
+            "idTransaccion": forms.get('idTransaccion').value,
+            "motivo": forms.get('motivo').value,
+            "idUser": localStorage.getItem('idUser'),
+            "montoParcial": forms.get('montoParcial').value
+        }
+
+        return this.http.post(environment.url + 'refunds/partial', { body: BODY }).pipe(take(1));
+    };
 }

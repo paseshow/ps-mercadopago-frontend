@@ -24,7 +24,7 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
   referenceReservaSelected: ReferenceMp = null;
 
   isOverallRefunds: boolean = false;
-  isPartialRefunds: boolean = false;
+  isRefunds: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -92,12 +92,11 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
   };
 
   overallRefund(): void {
-    this.isOverallRefunds = true;
-    this.isPartialRefunds = false;
+    this.isRefunds = true;
 
     this.refundsService.overallRefunds(this.formRefunds).subscribe(
       resultOverallRefund => {
-        this.isOverallRefunds = false;
+        this.isRefunds = true;
         this.listReservas = null;
         this.formRefunds.reset();
         this.btnCerrar.nativeElement.click();
@@ -109,17 +108,18 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
 
 
   refundsPartial(): void {
-    this.isOverallRefunds = false;
-    this.isPartialRefunds = true;
+    this.isRefunds = true;
 
-    // this.refundsService.overallRefunds(this.formRefunds).subscribe(
-    //   resultOverallRefund => {
-    //     this.isOverallRefunds = true;
-    //     this.listReservas = null;
-    //   }, error => {
+    this.refundsService.refundsPartial(this.formRefunds).subscribe(
+      responseRefundsPartial => {
+        this.isRefunds = true;
+        this.listReservas = null;
+        this.formRefunds.reset();
+        this.btnCerrar.nativeElement.click();
+      }, error => {
 
-    //   }
-    // );
+      }
+    );
   };
 
   validRefundsPartial(): boolean {
