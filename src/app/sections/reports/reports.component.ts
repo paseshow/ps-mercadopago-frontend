@@ -52,10 +52,16 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
       colorItemRegister.forEach(unItem => {
         if (unItem.innerHTML.includes("pending")) {
           unItem.classList.remove('statusAproved');
+          unItem.classList.remove('statusRefundsCancelled');
           unItem.classList.add('statusPendding');
+        } else if (unItem.innerHTML.includes("approved")) {
+          unItem.classList.remove('statusPendding');
+          unItem.classList.remove('statusRefundsCancelled');
+          unItem.classList.add('statusAproved');
         } else {
           unItem.classList.remove('statusPendding');
-          unItem.classList.add('statusAproved');
+          unItem.classList.remove('statusAproved');
+          unItem.classList.add('statusRefundsCancelled');
         }
       });
     }
@@ -64,10 +70,16 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
       colorItemRegisterFilter.forEach(unItem => {
         if (unItem.innerHTML.includes("pending")) {
           unItem.classList.remove('statusAproved');
+          unItem.classList.remove('statusRefundsCancelled');
           unItem.classList.add('statusPendding');
+        } else if (unItem.innerHTML.includes("approved")) {
+          unItem.classList.remove('statusPendding');
+          unItem.classList.remove('statusRefundsCancelled');
+          unItem.classList.add('statusAproved');
         } else {
           unItem.classList.remove('statusPendding');
-          unItem.classList.add('statusAproved');
+          unItem.classList.remove('statusAproved');
+          unItem.classList.add('statusRefundsCancelled');
         }
       });
     }
