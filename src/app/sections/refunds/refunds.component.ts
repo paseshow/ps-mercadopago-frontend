@@ -127,6 +127,6 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
   };
 
   validRefundsPartial(): boolean {
-    return this.formRefunds.get('devolucionParcial').value != 'devolucion' || (this.reservaSelect.importeTotal < this.formRefunds.get('montoParcial').value || 0 >= this.formRefunds.get('montoParcial').value);
+    return this.formRefunds.get('devolucionParcial').value != 'devolucion' || (this.reservaSelect.importeTotal < this.formRefunds.get('monto').value || 0 >= this.formRefunds.get('monto').value);
   };
 }
