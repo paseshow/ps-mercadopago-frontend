@@ -18,6 +18,8 @@ export class RefundsService {
             "idTransaccion": forms.get('idTransaccion').value,
             "motivo": forms.get('motivo').value,
             "idUser": localStorage.getItem('idUser'),
+            "monto":  forms.get('monto').value,
+            "eventoId": forms.get('eventoId').value
         };
 
         return this.http.post(environment.url + `refunds`, { body: body }).pipe(take(1));

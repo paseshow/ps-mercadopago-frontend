@@ -59,7 +59,8 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
       motivo: [''],
       devolucionTotal: [''],
       devolucionParcial: [''],
-      montoParcial: [0]
+      monto: [''],
+      eventoId: []
     })
   };
 
@@ -81,6 +82,9 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
 
   dataReferenceByReservaId(reserva): void {
     this.reservaSelect = reserva;
+    this.formRefunds.get('monto').setValue(this.reservaSelect.importeTotal);
+    this.formRefunds.get('eventoId').setValue(this.reservaSelect.eventoId);
+    
     this.referenceMpService.getReferenceMpByReservaId(this.reservaSelect.id).subscribe(
       reference => {
         this.referenceReservaSelected = reference;
@@ -93,7 +97,7 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
 
   overallRefund(): void {
     this.isRefunds = true;
-
+    debugger
     this.refundsService.overallRefunds(this.formRefunds).subscribe(
       resultOverallRefund => {
         this.isRefunds = true;
