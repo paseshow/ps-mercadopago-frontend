@@ -14,4 +14,14 @@
 
 .containerListRegistros {
     max-width: 100%;
+    overflow-x: auto;
+}
+
+.registerAprovedd {
+    background-color: rgb(98, 221, 98)
+}
+
+.textSpan {
+    font-size: 18px;
+    align-items: center;
 }

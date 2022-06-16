@@ -17,6 +17,10 @@ export class MercadoPagoService {
         return this.http.get<DataMercadoPago>(environment.url + 'security/' + eventId).pipe(take(1));
     };
 
+    createDataCuentaVinculada(dataUpdate: FormGroup) {
+        return this.http.put(environment.url + 'security/', dataUpdate.value).pipe(take(1));
+    };
+
     updateDataCuentaVinculada(dataUpdate: FormGroup) {
         return this.http.post(environment.url + 'security/update', dataUpdate.value).pipe(take(1));
     };

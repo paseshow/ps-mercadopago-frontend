@@ -19,6 +19,10 @@ export class ReferenceMpService {
         else param = new HttpParams();
 
         return this.http.get<ReferenceMp[]>(environment.url + `report/reservas`, { params: param }).pipe(take(1));
-    }
+    };
+
+    getReferenceMpByReservaId(reservaId): Observable<ReferenceMp> {
+        return this.http.get<ReferenceMp>(environment.url + `refunds/${reservaId}`).pipe(take(1));
+    };
 
 }
