@@ -11,7 +11,7 @@ export class EventoesService {
     ) { }
 
     getEventos() {
-        return this.http.get(environment.url + 'eventoes').pipe(take(1));
+        return this.http.get(environment.url + 'paseshow/eventos').pipe(take(1));
     }
 
 }

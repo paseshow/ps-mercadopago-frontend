@@ -5,7 +5,6 @@ import { Reserva } from 'src/app/models/reservas.model';
 import { ReferenceMpService } from 'src/app/services/referencesMp.service';
 import { ReservasService } from 'src/app/services/reservas.service';
 import { SocketIoService } from 'src/app/services/socketio.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-reports',
@@ -26,17 +25,17 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
     private referenceMpService: ReferenceMpService
   ) {
     this.listReservasOnline = [];
-    this.socketIoService.outEven.subscribe((res: ReferenceMp) => {
-      let index = 4;
-      console.log("Received of " + environment.url);
+    // this.socketIoService.outEven.subscribe((res: ReferenceMp) => {
+    //   let index = 4;
+    //   console.log("Received of " + environment.url);
 
-      for (let unRegistro in this.listReservasOnline) {
-        if (index == 0) break;
-        this.listReservasOnline[index] = this.listReservasOnline[index - 1];
-        index--;
-      }
-      this.listReservasOnline[0] = res;
-    });
+    //   for (let unRegistro in this.listReservasOnline) {
+    //     if (index == 0) break;
+    //     this.listReservasOnline[index] = this.listReservasOnline[index - 1];
+    //     index--;
+    //   }
+    //   this.listReservasOnline[0] = res;
+    // });
   }
 
   ngOnInit(): void {
@@ -88,7 +87,7 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
 
   initFormSearch(): void {
     this.formSearch = this.fb.group({
-      id: [''],
+      reservaId: [''],
       clienteDni: ['']
     });
   };

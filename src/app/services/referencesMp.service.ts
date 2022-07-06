@@ -22,7 +22,7 @@ export class ReferenceMpService {
     };
 
     getReferenceMpByReservaId(reservaId): Observable<ReferenceMp> {
-        return this.http.get<ReferenceMp>(environment.url + `refunds/${reservaId}`).pipe(take(1));
+        return this.http.get<ReferenceMp>(environment.url + `refounds/${reservaId}`).pipe(take(1));
     };
 
 }

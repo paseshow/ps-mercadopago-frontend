@@ -15,10 +15,6 @@ export class ReservasService {
 
     getReservaByWhere(formWhere: FormGroup): Observable<Reserva[]> {
 
-        const options = {
-            where: formWhere.value
-        };
-
-        return this.http.put<Reserva[]>(environment.url + 'reservas', options).pipe(take(1));
+        return this.http.put<Reserva[]>(environment.url + 'reserva', formWhere.value).pipe(take(1));
     };
 }

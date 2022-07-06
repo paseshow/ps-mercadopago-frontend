@@ -21,9 +21,4 @@ export class SocketIoService extends Socket {
         this.ioSocket.on('event', res => this.outEven.emit(res));
     }
 
-    // EMITE EVENTO AL BACK
-    // emitEvent = (payload = {}) => {
-    //     this.ioSocket.emit('event', payload);
-    // };
-
 }

@@ -103,12 +103,21 @@ export class ConfigurationsComponent implements OnInit {
   };
 
   saveDataMercadoPago(): void {
-    this.mercadoPagoService.createDataCuentaVinculada(this.formDataMercadoPago).subscribe(
-      exist => {
-        this.notDataConfigurations = false;
-        this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
-      }, error => {
-      });
+    if(this.formDataMercadoPago.get('id').value) {
+      this.mercadoPagoService.updateDataCuentaVinculada(this.formDataMercadoPago).subscribe(
+        exist => {
+          this.notDataConfigurations = false;
+          this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
+        }, error => {
+        });
+    } else {
+      this.mercadoPagoService.createDataCuentaVinculada(this.formDataMercadoPago).subscribe(
+        exist => {
+          this.notDataConfigurations = false;
+          this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
+        }, error => {
+        });
+    }
   };
 
   openConfigurationsEventoId(eventoId, indexItemEvent): void {

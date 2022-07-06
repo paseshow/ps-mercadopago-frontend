@@ -49,9 +49,9 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
 
   initForms(): void {
     this.formSearch = this.fb.group({
-      id: [''],
+      reservaId: [''],
       clienteDni: [''],
-      estado: ["'E'"]
+      estado: ["E"]
     });
 
     this.formRefunds = this.fb.group({
