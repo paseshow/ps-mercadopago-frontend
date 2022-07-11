@@ -80,7 +80,17 @@
                                     <input type="email" class="form-control" formControlName="accessToken">
                                 </div>
                             </div>
+
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <label class="form-label">MAXIMA CANTIDAD DE CUOTAS</label>
+                                    <input type="number" min="1" max="24" step="1" oninput="validity.valid||(value='');"
+                                        class="form-control" placeholder="Cuotas" aria-describedby="basic-addon1"
+                                        formControlName="maxCuotas" required>
+                                </div>
+                            </div>
                         </div>
+
 
                         <div class="d-grid mt-3">
                             <button class="btn btn-success" type="submit"

@@ -1,10 +1,13 @@
 import { AfterContentChecked, Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+//INTERFACE
 import { ReferenceMp } from 'src/app/models/referneceMp.model';
 import { Reserva } from 'src/app/models/reservas.model';
+
+//SERVICIOS
 import { ReferenceMpService } from 'src/app/services/referencesMp.service';
 import { ReservasService } from 'src/app/services/reservas.service';
-import { SocketIoService } from 'src/app/services/socketio.service';
 
 @Component({
   selector: 'app-reports',
@@ -21,26 +24,14 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
   constructor(
     private fb: FormBuilder,
     private reservasService: ReservasService,
-    private socketIoService: SocketIoService,
     private referenceMpService: ReferenceMpService
   ) {
     this.listReservasOnline = [];
-    // this.socketIoService.outEven.subscribe((res: ReferenceMp) => {
-    //   let index = 4;
-    //   console.log("Received of " + environment.url);
-
-    //   for (let unRegistro in this.listReservasOnline) {
-    //     if (index == 0) break;
-    //     this.listReservasOnline[index] = this.listReservasOnline[index - 1];
-    //     index--;
-    //   }
-    //   this.listReservasOnline[0] = res;
-    // });
   }
 
   ngOnInit(): void {
     this.initFormSearch();
-    this.getReference(5);
+    // this.getReference(5);
   };
 
   ngAfterContentChecked(): void {
@@ -92,13 +83,6 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
     });
   };
 
-  getReference(limit?: number): void {
-    this.referenceMpService.getReferencesMp(limit).subscribe(references => {
-      this.listReservasOnline = references;
-    }, error => {
-
-    });
-  };
 
   searchReserva(): void {
     this.reservasService.getReservaByWhere(this.formSearch).subscribe(

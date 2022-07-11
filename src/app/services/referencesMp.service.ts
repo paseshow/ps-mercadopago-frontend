@@ -11,16 +11,6 @@ export class ReferenceMpService {
     constructor(
         private http: HttpClient
     ) { }
-
-    getReferencesMp(limit: number): Observable<ReferenceMp[]> {
-        let param: any;
-
-        if (limit) param = new HttpParams().set('limit', limit.toString());
-        else param = new HttpParams();
-
-        return this.http.get<ReferenceMp[]>(environment.url + `report/reservas`, { params: param }).pipe(take(1));
-    };
-
     getReferenceMpByReservaId(reservaId): Observable<ReferenceMp> {
         return this.http.get<ReferenceMp>(environment.url + `refounds/${reservaId}`).pipe(take(1));
     };

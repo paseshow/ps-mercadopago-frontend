@@ -84,7 +84,7 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
     this.reservaSelect = reserva;
     this.formRefunds.get('monto').setValue(this.reservaSelect.importeTotal);
     this.formRefunds.get('eventoId').setValue(this.reservaSelect.eventoId);
-    
+
     this.referenceMpService.getReferenceMpByReservaId(this.reservaSelect.id).subscribe(
       reference => {
         this.referenceReservaSelected = reference;
@@ -126,7 +126,19 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
     );
   };
 
+
+  //HABILITAR BOTONES
+  
+  //DEVOLUCION PARCIAL 
   validRefundsPartial(): boolean {
-    return this.formRefunds.get('devolucionParcial').value != 'devolucion' || (this.reservaSelect.importeTotal < this.formRefunds.get('monto').value || 0 >= this.formRefunds.get('monto').value);
+    return this.formRefunds.get('devolucionParcial').value != 'devolucion' || (this.reservaSelect.importeTotal < this.formRefunds.get('monto').value 
+    || 0 >= this.formRefunds.get('monto').value)
+    || (this.formRefunds.get('motivo')).value == ''
+  };
+
+  //DEVOLUCION TOTAL
+  btnDevTotal() {
+    return this.formRefunds.get('motivo').value == ''
+      || (this.formRefunds.get('devolucionTotal')).value != 'devolucion'
   };
 }

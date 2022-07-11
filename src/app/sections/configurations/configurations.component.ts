@@ -40,6 +40,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   initFormDataCuentaMercadoPago(): void {
+    // HABILITAR BTN DE GUARDAR SOLO CON ESTOS DATOS COMPLETOS
     this.formDataMercadoPago = this.fb.group({
       id: [''],
       accessToken: ['', Validators.required],
@@ -47,7 +48,8 @@ export class ConfigurationsComponent implements OnInit {
       userIdMp: [, Validators.required],
       nombreCuenta: ['', Validators.required],
       nombre: ['paseshow',],
-      eventoId: ['', Validators.required]
+      eventoId: ['', Validators.required],
+      maxCuotas: ['', Validators.required]
     })
   };
 
@@ -62,7 +64,6 @@ export class ConfigurationsComponent implements OnInit {
         this.formDataMercadoPago.get('userIdMp').setValue(dataMercadoPago.userIdMp);
         this.formDataMercadoPago.get('nombreCuenta').setValue(dataMercadoPago.nombreCuenta);
         this.formDataMercadoPago.get('eventoId').setValue(dataMercadoPago.eventoId);
-
       }, error => {
         this.notDataConfigurations = true;
       });
@@ -103,7 +104,7 @@ export class ConfigurationsComponent implements OnInit {
   };
 
   saveDataMercadoPago(): void {
-    if(this.formDataMercadoPago.get('id').value) {
+    if (this.formDataMercadoPago.get('id').value) {
       this.mercadoPagoService.updateDataCuentaVinculada(this.formDataMercadoPago).subscribe(
         exist => {
           this.notDataConfigurations = false;
