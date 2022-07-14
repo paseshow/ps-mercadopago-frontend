@@ -5,6 +5,7 @@ import { Reserva } from 'src/app/models/reservas.model';
 import { ReferenceMpService } from 'src/app/services/referencesMp.service';
 import { RefundsService } from 'src/app/services/refunds.service';
 import { ReservasService } from 'src/app/services/reservas.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-refunds',
@@ -30,7 +31,8 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
     private fb: FormBuilder,
     private reservasService: ReservasService,
     private referenceMpService: ReferenceMpService,
-    private refundsService: RefundsService
+    private refundsService: RefundsService,
+    private loadingService: LoadingService
   ) {
   }
 
@@ -66,27 +68,42 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
 
 
   searchReserva(): void {
+    //ACTIVAMOS SPINNER LOAD
+    this.loadingService.setLoader(true);
+
     this.reservasService.getReservaByWhere(this.formSearch).subscribe(
       resultReservas => {
         this.listReservas = resultReservas;
+        //ACTIVAMOS SPINNER LOAD
+        this.loadingService.setLoader(true);
 
         this.listReservas.forEach(anReserva => {
           if (anReserva.estado == 'P') anReserva.estado = 'pendding';
-          else if (anReserva.estado == 'E') anReserva.estado = 'approved';
+          else if (anReserva.estado == 'E') anReserva.estado = 'approved'
+          //DCTIVAMOS SPINNER LOAD
+          this.loadingService.setLoader(false);
         });
-
       }, error => {
-
+        //DEACTIVAMOS SPINNER LOAD EN ERROR
+        this.loadingService.setLoader(false);
       });
   };
 
   dataReferenceByReservaId(reserva): void {
+    //ACTIVAMOS SPINNER LOAD
+    this.loadingService.setLoader(true);
+
+
     this.reservaSelect = reserva;
     this.formRefunds.get('monto').setValue(this.reservaSelect.importeTotal);
     this.formRefunds.get('eventoId').setValue(this.reservaSelect.eventoId);
 
     this.referenceMpService.getReferenceMpByReservaId(this.reservaSelect.id).subscribe(
       reference => {
+        //DESACTIVAMOS SPINNER LOAD
+        this.loadingService.setLoader(false);
+        
+
         this.referenceReservaSelected = reference;
         this.formRefunds.get('idTransaccion').setValue(reference.idTransaccionMp);
       }, error => {
@@ -97,7 +114,6 @@ export class RefundsComponent implements OnInit, AfterViewChecked {
 
   overallRefund(): void {
     this.isRefunds = true;
-    debugger
     this.refundsService.overallRefunds(this.formRefunds).subscribe(
       resultOverallRefund => {
         this.isRefunds = true;

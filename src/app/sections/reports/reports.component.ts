@@ -8,6 +8,7 @@ import { Reserva } from 'src/app/models/reservas.model';
 //SERVICIOS
 import { ReferenceMpService } from 'src/app/services/referencesMp.service';
 import { ReservasService } from 'src/app/services/reservas.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-reports',
@@ -24,7 +25,8 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
   constructor(
     private fb: FormBuilder,
     private reservasService: ReservasService,
-    private referenceMpService: ReferenceMpService
+    private referenceMpService: ReferenceMpService,
+    private loadingService: LoadingService
   ) {
     this.listReservasOnline = [];
   }
@@ -85,18 +87,24 @@ export class ReportsComponent implements OnInit, AfterContentChecked {
 
 
   searchReserva(): void {
+    //ACTIVAMOS SPINNER LOAD
+    this.loadingService.setLoader(true);
+
     this.reservasService.getReservaByWhere(this.formSearch).subscribe(
       resultReservas => {
         this.listReservas = resultReservas;
-
+        //DESACTIVAMOS SPINNER LOAD
+        this.loadingService.setLoader(false);
         this.listReservas.forEach(anReserva => {
-
+          
           if (anReserva.estado == 'P') anReserva.estado = 'pending';
           else if (anReserva.estado == 'E') anReserva.estado = 'approved';
 
         });
 
       }, error => {
+        //ACTIVAMOS SPINNER LOAD EN ERROR
+        this.loadingService.setLoader(false);
       });
   };
 

@@ -8,7 +8,7 @@
 
     <div class="container mt-4 mb-4">
         <div class="row  mx-auto">
-
+            <!-- <app-loading *ngIf="fondoLoading"></app-loading> -->
             <div class="col col-md-5 p-0">
                 <label class="form-label">Filtro por id</label>
                 <input type="email" class="form-control" (keyup)="filterById($event.target.value)">
@@ -16,11 +16,11 @@
                     <div class="mx-auto">
                         <div class="container containerListEventos p-0">
 
-                            <div *ngIf="isLoading" class="text-center">
+                            <!-- <div *ngIf="isLoading" class="text-center">
                                 <div class="spinner-border" role="status">
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
-                            </div>
+                            </div> -->
 
 
                             <table *ngIf="!isLoading" class="table">
@@ -81,18 +81,40 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-2">
-                                <div class="col-6">
-                                    <label class="form-label">MAXIMA CANTIDAD DE CUOTAS</label>
-                                    <input type="number" min="1" max="24" step="1" oninput="validity.valid||(value='');"
-                                        class="form-control" placeholder="Cuotas" aria-describedby="basic-addon1"
-                                        formControlName="maxCuotas" required>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+                                <div class="p-2 bd-highlight">
+                                    <div class="row mt-2">
+                                        <div>
+                                            <label class="form-label">MAXIMA CANTIDAD DE CUOTAS</label>
+                                            <input type="number" min="1" max="24" step="1" oninput="validity.valid||(value='');"
+                                                class="form-control" placeholder="Cuotas" aria-describedby="basic-addon1"
+                                                formControlName="maxCuotas" required>
+                                        </div>
+                                    </div>
                                 </div>
+
+
+                                <div *ngIf="errorGuardarData">
+                                <div class="p-2 mb-0 bd-highlight">
+                                    <div class="alert d-flex align-items-center pt-1 ps-1 pb-2" style="margin-top: 38px; color: white; background-color: rgb(230, 42, 42);" role="alert">
+                                        <span class="iconify" data-icon="dashicons:no"></span>
+                                        &nbsp;Error al guardar
+                                    </div>
+                                </div>
+                                </div>
+                                
+                                <div *ngIf="guardarDataCorrectamente">
+                                <div class="p-2 mb-0 bd-highlight">
+                                    <div class="alert alert-success d-flex align-items-center pt-1 ps-1 pb-2" style="margin-top: 38px;" role="alert">
+                                        <span class="iconify" data-icon="flat-color-icons:ok"></span>
+                                        &nbsp;Guardado correctamente
+                                    </div>
+                                </div>
+                              </div> 
                             </div>
                         </div>
 
-
-                        <div class="d-grid mt-3">
+                        <div class="d-grid mt-0">
                             <button class="btn btn-success" type="submit"
                                 [disabled]="formDataMercadoPago.invalid">GUARDAR</button>
                         </div>
@@ -102,6 +124,8 @@
                         <i class="bx bxs-error-alt"></i>
                         Este evento no tiene cuenta asociada.
                     </div>
+
+
                 </div>
             </div>
         </div>
