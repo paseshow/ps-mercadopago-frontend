@@ -18,7 +18,7 @@ export class AuthService {
             "password": formLogin.get("password").value,
         }
         // return this.http.post(environment.urlPaseShow + 'usuarios/authenticate', FormData.toString(), { headers: headers }).pipe(take(1));
-        return this.http.post(environment.url + 'authentication', JsonLogin).pipe(take(1));
+        return this.http.post(environment.url + 'paseshow/authentication', JsonLogin).pipe(take(1));
     };
 
 }

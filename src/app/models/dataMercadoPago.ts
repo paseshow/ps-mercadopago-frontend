@@ -6,4 +6,5 @@ export interface DataMercadoPago {
     nombreCuenta: string,
     nombre: string,
     eventoId: number,
+    maxCuotas: number
 };

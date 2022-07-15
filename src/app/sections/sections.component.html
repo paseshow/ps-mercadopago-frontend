@@ -1,9 +1,10 @@
-<div #bodyPd class="body-pd">
+<div #bodyPd class="body-pd" style="position: relative;">
   <header #header class="header" id="header">
     <div class="header_toggle"> <i #headerToggle class='bx bx-menu' id="header-toggle" (click)="openNavbar()"></i>
     </div>
   </header>
   <div #navbar class="l-navbar" id="nav-bar">
+    <app-loading></app-loading>
     <nav class="nav">
       <div>
         <div class="nav_logo"> <i class='bx bx-line-chart nav_logo-icon'></i> <span
@@ -45,5 +46,6 @@
 </div>
 
 <div class=" bg-light containerRouterOutlet">
-  <router-outlet></router-outlet>
+  <router-outlet>
+  </router-outlet>
 </div>

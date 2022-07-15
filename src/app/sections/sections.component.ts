@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
     selector: 'sections-app',
@@ -19,7 +20,7 @@ export class SectionsComponents implements OnInit {
         {
             title: 'Configuracion',
             icon: 'bx-bar-chart-alt-2',
-            router: 'configuracion'
+            router: 'configuracion',
         },
         {
             title: 'Registros',
@@ -33,13 +34,17 @@ export class SectionsComponents implements OnInit {
         }
     ];
 
-
+    loading: boolean;
 
     constructor(
-        private router: Router
+        private router: Router,
+        private loadingService: LoadingService
     ) { }
 
     ngOnInit(): void {
+        let loading = this.loadingService.getLoader();
+        //DESACTIVAMOS SPINNER LOAD
+        this.loadingService.setLoader(true);
     };
 
     openNavbar(): void {

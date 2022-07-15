@@ -1,6 +1,6 @@
 <div class="containerPadre">
     <h4>Registros:</h4>
-    <p class="text-muted">
+    <!-- <p class="text-muted">
         Acciones realizadas por mercado pago. Limite de registro 5.
     </p>
 
@@ -30,13 +30,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <h5 class="ml-3 mt-4">Buscar por reserva id:</h5>
     <div class="container">
         <form [formGroup]="formSearch">
             <div class="input-group">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Reserva id" formControlName="id">
+                <input type="text" aria-label="First name" class="form-control" placeholder="Reserva id" formControlName="reservaId">
                 <input type="text" aria-label="Last name" class="form-control" placeholder="Dni cliente" formControlName="clienteDni">
                 <button class="btn btn-success" type="button" (click)="searchReserva()">
                     <i class="bx bx-search-alt-2"></i>
@@ -49,7 +49,7 @@
 
     <div class="container mt-4 mb-4 p-0">
         <div class="container p-0">
-            <div class="mx-auto">
+            <div class="mx-auto" *ngIf="listReservas.length > 0">
                 <div class="container containerListRegistros p-0">
 
                     <table class="table  text-center">

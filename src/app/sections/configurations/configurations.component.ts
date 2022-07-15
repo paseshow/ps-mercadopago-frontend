@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { Eventoes } from 'src/app/models/eventoes.model';
 import { EventoesService } from 'src/app/services/eventoes.services';
 import { MercadoPagoService } from 'src/app/services/mercadoPago.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-configurations',
@@ -19,19 +21,26 @@ export class ConfigurationsComponent implements OnInit {
   listEventosHabilitadosOriginal: Eventoes[];
 
   isLoading: boolean;
+  // fondoLoading: boolean;
   isEventoSelect: boolean;
   notDataConfigurations: boolean;
+  errorGuardarData: boolean;
+  guardarDataCorrectamente: boolean;
 
   constructor(
     private eventoesService: EventoesService,
     private mercadoPagoService: MercadoPagoService,
     private fb: FormBuilder,
+    private loadingService: LoadingService
   ) {
     this.listEventosHabilitados = [];
     this.listEventosHabilitadosOriginal = [];
-    this.isLoading = true;
+    // this.isLoading = false;
+    // this.fondoLoading = true;
     this.isEventoSelect = false;
     this.notDataConfigurations = false;
+    this.errorGuardarData = false;
+    this.guardarDataCorrectamente = false;
   }
 
   ngOnInit(): void {
@@ -40,6 +49,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   initFormDataCuentaMercadoPago(): void {
+    // HABILITAR BTN DE GUARDAR SOLO CON ESTOS DATOS COMPLETOS
     this.formDataMercadoPago = this.fb.group({
       id: [''],
       accessToken: ['', Validators.required],
@@ -47,14 +57,19 @@ export class ConfigurationsComponent implements OnInit {
       userIdMp: [, Validators.required],
       nombreCuenta: ['', Validators.required],
       nombre: ['paseshow',],
-      eventoId: ['', Validators.required]
+      eventoId: ['', Validators.required],
+      maxCuotas: ['', Validators.required]
     })
   };
 
   getDataCuentaMercadoPago(eventoId): void {
+    //ACTIVAMOS SPINNER LOAD
+    this.loadingService.setLoader(true);
 
-    this.mercadoPagoService.getDataCuentaVinculada(eventoId).subscribe(
-      dataMercadoPago => {
+    this.mercadoPagoService.getDataCuentaVinculada(eventoId)
+    .pipe( finalize( () => this.loadingService.setLoader(false) ))
+    .subscribe(
+      dataMercadoPago => {        
         // SETEAMOS VALORES EN EL FORM
         this.formDataMercadoPago.get('id').setValue(dataMercadoPago.id);
         this.formDataMercadoPago.get('accessToken').setValue(dataMercadoPago.accessToken);
@@ -62,14 +77,17 @@ export class ConfigurationsComponent implements OnInit {
         this.formDataMercadoPago.get('userIdMp').setValue(dataMercadoPago.userIdMp);
         this.formDataMercadoPago.get('nombreCuenta').setValue(dataMercadoPago.nombreCuenta);
         this.formDataMercadoPago.get('eventoId').setValue(dataMercadoPago.eventoId);
-
+        this.formDataMercadoPago.get('maxCuotas').setValue(dataMercadoPago.maxCuotas);
       }, error => {
         this.notDataConfigurations = true;
+        this.errorGuardarData = false;
       });
 
   };
 
   getEventos(): void {
+    //ACTIVAMOS SPINNER LOAD
+    this.loadingService.setLoader(true);
 
     this.eventoesService.getEventos().subscribe(
       (eventoes: Eventoes[]) => {
@@ -82,10 +100,11 @@ export class ConfigurationsComponent implements OnInit {
             this.listEventosHabilitadosOriginal.push(unEvento);
           }
         })
-        this.isLoading = false;
+        //DESACTIVAMOS SPINNER LOAD
+        this.loadingService.setLoader(false);
       }, error => {
-        this.isLoading = false;
-
+        //DESACTIVAMOS SPINNER LOAD EN ERROR
+        this.loadingService.setLoader(false);
       }, () => {
       });
   };
@@ -103,12 +122,31 @@ export class ConfigurationsComponent implements OnInit {
   };
 
   saveDataMercadoPago(): void {
-    this.mercadoPagoService.createDataCuentaVinculada(this.formDataMercadoPago).subscribe(
-      exist => {
-        this.notDataConfigurations = false;
-        this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
-      }, error => {
-      });
+    this.loadingService.setLoader(true);
+    if (this.formDataMercadoPago.get('id').value) {
+      this.mercadoPagoService.updateDataCuentaVinculada(this.formDataMercadoPago).subscribe(
+        exist => {
+          this.loadingService.setLoader(false);
+          this.notDataConfigurations = false;
+          this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
+        }, error => {
+          this.loadingService.setLoader(false);
+          this.errorGuardarData = true;
+        });
+    } else {
+      this.loadingService.setLoader(true);
+      this.mercadoPagoService.createDataCuentaVinculada(this.formDataMercadoPago).subscribe(
+        exist => {
+          this.notDataConfigurations = false;
+          this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
+        }, error => {
+          //DESACTIVAMOS SPINNER LOAD EN ERROR
+          this.errorGuardarData = true;
+          this.loadingService.setLoader(false);
+          this.notDataConfigurations = false;
+          this.formDataMercadoPago;
+        });
+    }
   };
 
   openConfigurationsEventoId(eventoId, indexItemEvent): void {

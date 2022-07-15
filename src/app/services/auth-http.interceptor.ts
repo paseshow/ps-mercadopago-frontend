@@ -15,10 +15,15 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token: string = localStorage.getItem('token');
-
+    this.isNot = true;
+    
     //saltea el agregado del token
     if (req.headers.has(InterceptorSkipHeader)) {
       const headers = req.headers.delete(InterceptorSkipHeader);
+      this.isNot = false;
+    }
+
+    if(req.url.includes('authentication')) {
       this.isNot = false;
     }
 

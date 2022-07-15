@@ -9,20 +9,27 @@ import { SectionsComponents } from './sections.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RefundsComponent } from './refunds/refunds.component';
+import { LoadingComponent } from '../components/loading/loading.component';
+import { AppModule } from '../app.module';
+import { LoadingModule } from '../components/loading/loading.module';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule.forChild(SectionsRoutes),
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        LoadingModule
     ],
-    exports: [],
+    exports: [
+        
+    ],
     declarations: [
         SectionsComponents,
         ConfigurationsComponent,
         ReportsComponent,
-        RefundsComponent
+        RefundsComponent,
+
     ],
     providers: [],
 })
