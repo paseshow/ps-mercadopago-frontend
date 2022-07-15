@@ -29,9 +29,7 @@ export class AuthComponent implements OnInit {
   }
 
   login(): void {
-    debugger
     this.loadingService.setLoader(true);
-    debugger
     this.authService.login(this.formLogin).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token);

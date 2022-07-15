@@ -79,7 +79,7 @@
     <div class="container mt-4 mb-4 p-0">
         <div class="container p-0">
             <div class="row  mx-auto">
-                <div class="container containerListRegistros p-0">
+                <div class="container containerListRegistros p-0" *ngIf="listReservas.length > 0">
 
                     <table class="table  text-center">
                         <thead class="table-dark">
@@ -153,13 +153,13 @@
                 <div *ngIf="!isRefunds" [formGroup]="formRefunds" class="form-floating mb-3">
                     
 
-                    <!-- DEVOLUCION TOTAL -->
                     <div class="was-validated">
                     <input type="text" style="border-color: #c9c7c7;" class="form-control is-valid" minlength="1"
                         id="validationServer01" placeholder="motivo" formControlName="motivo" required>
                     </div>
                     <div class="container mt-3">
                         <div class="row">
+                            <!-- DEVOLUCION TOTAL -->
                             <div class="col-6 d-grid gap-2">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control"

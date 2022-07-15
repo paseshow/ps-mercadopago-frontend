@@ -29,7 +29,8 @@ export class MercadoPagoService {
             userIdMp: dataUpdate.get('userIdMp').value,
             nombreCuenta: dataUpdate.get('nombreCuenta').value,
             nombre: dataUpdate.get('nombre').value,
-            eventoId: dataUpdate.get('eventoId').value
+            eventoId: dataUpdate.get('eventoId').value,
+            maxCuotas: dataUpdate.get('maxCuotas').value
         }
 
         return this.http.post(environment.url + 'security', body).pipe(take(1));

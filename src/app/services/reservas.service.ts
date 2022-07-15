@@ -14,7 +14,6 @@ export class ReservasService {
     ) { }
 
     getReservaByWhere(formWhere: FormGroup): Observable<Reserva[]> {
-
         return this.http.put<Reserva[]>(environment.url + 'reserva', formWhere.value).pipe(take(1));
     };
 }

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 import { Eventoes } from 'src/app/models/eventoes.model';
 import { EventoesService } from 'src/app/services/eventoes.services';
 import { MercadoPagoService } from 'src/app/services/mercadoPago.service';
@@ -65,7 +66,9 @@ export class ConfigurationsComponent implements OnInit {
     //ACTIVAMOS SPINNER LOAD
     this.loadingService.setLoader(true);
 
-    this.mercadoPagoService.getDataCuentaVinculada(eventoId).subscribe(
+    this.mercadoPagoService.getDataCuentaVinculada(eventoId)
+    .pipe( finalize( () => this.loadingService.setLoader(false) ))
+    .subscribe(
       dataMercadoPago => {        
         // SETEAMOS VALORES EN EL FORM
         this.formDataMercadoPago.get('id').setValue(dataMercadoPago.id);
@@ -74,10 +77,10 @@ export class ConfigurationsComponent implements OnInit {
         this.formDataMercadoPago.get('userIdMp').setValue(dataMercadoPago.userIdMp);
         this.formDataMercadoPago.get('nombreCuenta').setValue(dataMercadoPago.nombreCuenta);
         this.formDataMercadoPago.get('eventoId').setValue(dataMercadoPago.eventoId);
+        this.formDataMercadoPago.get('maxCuotas').setValue(dataMercadoPago.maxCuotas);
       }, error => {
         this.notDataConfigurations = true;
         this.errorGuardarData = false;
-        this.loadingService.setLoader(false);
       });
 
   };
@@ -125,10 +128,8 @@ export class ConfigurationsComponent implements OnInit {
         exist => {
           this.loadingService.setLoader(false);
           this.notDataConfigurations = false;
-          console.log('Guardado con Exito');
           this.getDataCuentaMercadoPago(this.formDataMercadoPago.get("eventoId").value);
         }, error => {
-          console.log('No se pudo Guardar');
           this.loadingService.setLoader(false);
           this.errorGuardarData = true;
         });
